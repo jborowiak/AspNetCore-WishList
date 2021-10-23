@@ -28,6 +28,13 @@ namespace WishList.Controllers
             return View("Create");
         }
 
+        [HttpGet]
+        public IActionResult Get(int id)
+        {
+            var item = _context.Items.FirstOrDefault(x => x.Id == id);
+            return View("Get", item);
+        }
+
         [HttpPost]
         public IActionResult Create(Item item)
         {
@@ -36,11 +43,10 @@ namespace WishList.Controllers
             return RedirectToAction("Index");
         }
 
-        [HttpDelete]
         public IActionResult Delete(int id)
         {
-            var itemToRemove = _context.Items.FirstOrDefault(x => x.Id == id);
-            _context.Items.Remove(itemToRemove);
+            var item = _context.Items.FirstOrDefault(e => e.Id == id);
+            _context.Items.Remove(item);
             _context.SaveChanges();
             return RedirectToAction("Index");
         }
